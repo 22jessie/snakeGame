@@ -2,9 +2,10 @@ package view;
 
 import javax.swing.JPanel;
 
-import model.SlitheryArea;
+import model.Point;
+import model.Slitherable;
 
-public class SlitheryPanel extends JPanel implements SlitheryArea{
+public class SlitheryPanel extends JPanel implements Slitherable{
 
 	/**
 	 * 
@@ -15,6 +16,41 @@ public class SlitheryPanel extends JPanel implements SlitheryArea{
 	public SlitheryPanel() {
 		
 		
+		
+	}
+
+
+	@Override
+	public void showSnakeHead(Point head) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void showSnakeBody(Point p) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void showSnakeTail(Point tail) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void changeSnakeColor() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void splitSnakeInHalf() {
+		// TODO Auto-generated method stub
 		
 	}
 
