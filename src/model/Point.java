@@ -1,8 +1,8 @@
 package model;
 
 public class Point {
-	int x;
-	int y;
+	private int x;
+	private int y;
 
 	public Point(Point p) {
 		x=p.getX();
@@ -26,8 +26,20 @@ public class Point {
 		y=j;
 	}
 	
-	public boolean equals(Point p2) {
-		return p2.getX()==x && p2.getY()==y;
+	@Override
+	public boolean equals(Object o) {
+		if(o instanceof Point) {
+			Point p2=(Point)o;
+			return p2.getX()==x && p2.getY()==y;
+		}
+		return false;
+		
+		
+	}
+	
+	@Override
+	public int hashCode() {
+	    return toString().hashCode();
 	}
 	
 	public String toString() {

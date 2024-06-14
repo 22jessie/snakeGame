@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.GridLayout;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -19,30 +21,31 @@ public class SlitheryPanel extends JPanel implements Slitherable{
 	
 	private JButton buttons[];
 	
-	private Icon snakeBody;
-	private Icon normalCell;
-	private Icon fire;
-	private Icon bomb;
-	private Icon strawberry;
-	private Icon apple;
 	
+	private Map<String,Icon> icons;
+	private static final String[] iconsFilenames= {"resources/snakeBody.png","resources/cell.png","resources/fire.png"
+			,"resources/bomb.png","resources/strawberry.png","resources/apple.png"};
+	private final String ELEMENTS[]={
+		"SNAKE_BODY","CELL","FIRE","BOMB","STRAWBERRY","APPLE"
+	};
+	
+	 
+
 	
 	public SlitheryPanel(int width, int height) {
+		
 		this.width=width;
 		this.height=height;
 		setLayout(new GridLayout(width,height));
-		loadSnakeImages();
+		loadImages();
 		createSlitheryBoard();
 	}
 	
-	private void loadSnakeImages() {
-		snakeBody=new ImageIcon("resources/snakeBody.png");
-		normalCell=new ImageIcon("resources/cell.png");
-		fire=new ImageIcon("resources/fire.png");
-		bomb=new ImageIcon("resources/bomb.png");
-		strawberry=new ImageIcon("resources/strawberry.png");
-		apple=new ImageIcon("resources/apple.png");
-		
+	private void loadImages() {
+		icons=new HashMap<String, Icon>();	
+		for(int i=0; i < iconsFilenames.length; i++) {
+			icons.put(ELEMENTS[i], new ImageIcon(iconsFilenames[i]));
+		}
 	}
 
 	private void createSlitheryBoard() {
@@ -52,7 +55,7 @@ public class SlitheryPanel extends JPanel implements Slitherable{
 		for(int i=0; i < width; i++) {
 			for(int j=0; j < height; j++) {
 				b=new JButton();
-				b.setIcon(normalCell);
+				b.setIcon(icons.get(ELEMENTS[1]));
 				buttons[i*width+j]=b;
 				add(b);
 			}
@@ -68,7 +71,7 @@ public class SlitheryPanel extends JPanel implements Slitherable{
 
 	@Override
 	public void showSnakeBody(Point p) {
-		buttons[p.getX()*width+p.getY()].setIcon(snakeBody);
+		buttons[p.getX()*width+p.getY()].setIcon(icons.get(ELEMENTS[0]));
 	}
 
 
@@ -98,31 +101,31 @@ public class SlitheryPanel extends JPanel implements Slitherable{
 
 	@Override
 	public void clearPoint(Point p) {
-		buttons[p.getX()*width+p.getY()].setIcon(normalCell);
+		buttons[p.getX()*width+p.getY()].setIcon(icons.get(ELEMENTS[1]));
 		
 	}
 
 	@Override
 	public void putApple(int r, int c) {
-		buttons[r*width+c].setIcon(apple);
+		buttons[r*width+c].setIcon(icons.get(ELEMENTS[5]));
 		
 	}
 
 	@Override
 	public void putStrawberry(int r, int c) {
-		buttons[r*width+c].setIcon(strawberry);
+		buttons[r*width+c].setIcon(icons.get(ELEMENTS[4]));
 		
 	}
 
 	@Override
 	public void putBomb(int r, int c) {
-		buttons[r*width+c].setIcon(bomb);
+		buttons[r*width+c].setIcon(icons.get(ELEMENTS[3]));
 		
 	}
 
 	@Override
 	public void putFire(int r, int c) {
-		buttons[r*width+c].setIcon(fire);
+		buttons[r*width+c].setIcon(icons.get(ELEMENTS[2]));
 		
 				
 	}

@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class SlitheryArea {
 	
-	private final static int MAX_ELEMENTS_IN_BOARD=5;
+	private final static int MAX_ELEMENTS_IN_BOARD=2;
 	
 	private int rows;
 	private int columns;
@@ -38,11 +38,10 @@ public class SlitheryArea {
 	
 	void slitherOn(Point p) throws DeadSnakeException{
 		String val;
-		
 		if(p.getX()>=0 && p.getX()<rows && p.getY()>=0 && p.getY()<columns) {
 			if(cellsWithElements.containsKey(p)) {
 				val=cellsWithElements.get(p);
-				cellsWithElements.remove(p);
+				removePoint(p);
 				switch(val) {
 				case "APPLE": 		snake.grow();			break;
 				case "STRAWBERRY":	snake.changeColor();	break;
@@ -50,12 +49,15 @@ public class SlitheryArea {
 				case "FIRE":		snake.splitInHalf();	break;
 				}
 			}
-			
 		}else {
 			snake.kill();
 			throw new DeadSnakeException("The Snake has crossed the board's limit");
 		}
 	}	
+	
+	private void removePoint(Point p) {
+		cellsWithElements.remove(p);
+	}
 	
 	
 	public class ElementGenerator extends Thread {
@@ -84,7 +86,8 @@ public class SlitheryArea {
 			newElement=rand.nextInt(GAME_ELEMENTS.length);
 			r=rand.nextInt(rows);
 			c=rand.nextInt(columns);
-			cellsWithElements.put(new Point(r,c), GAME_ELEMENTS[newElement]);
+			Point x= new Point(r,c);
+			cellsWithElements.put(x, GAME_ELEMENTS[newElement]);
 			switch(GAME_ELEMENTS[newElement]) {
 			case "APPLE": 		slitherable.putApple(r,c);			break;
 			case "STRAWBERRY":	slitherable.putStrawberry(r,c);		break;

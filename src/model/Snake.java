@@ -44,10 +44,11 @@ public class Snake extends Thread {
 				sleep(1000);
 			}
 		}catch(DeadSnakeException e) {
-			System.out.println("Game Over!");
 		}
 		catch (InterruptedException e) {
 			e.printStackTrace();
+		}finally{
+			System.out.println("Game Over!");
 		}
 	}
 	
