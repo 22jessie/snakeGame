@@ -33,6 +33,7 @@ public class SnakeWindow extends JFrame{
 		add(panel);
 		
 		setSize(WINDOW_WIDTH_PX,WINDOW_HEIGHT_PX);
+		setTitle("Snake Game :)");
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		configureKeyListener();
@@ -49,6 +50,7 @@ public class SnakeWindow extends JFrame{
 		area=new SlitheryArea(BOARD_ROWS, BOARD_COL);
 		snake=new Snake(new Point(BOARD_ROWS/2,BOARD_COL/2),area,panel);
 		area.setSnake(snake);
+		area.setSlitherable(panel);
 		snake.start();
 	}
 

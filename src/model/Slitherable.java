@@ -14,4 +14,12 @@ public interface Slitherable {
 	abstract void killSnake();
 
 	abstract void clearPoint(Point prevTail);
+
+	abstract void putApple(int r, int c);
+
+	abstract void putStrawberry(int r, int c);
+
+	abstract void putBomb(int r, int c);
+
+	abstract void putFire(int r, int c);
 }

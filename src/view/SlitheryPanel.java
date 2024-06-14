@@ -21,6 +21,10 @@ public class SlitheryPanel extends JPanel implements Slitherable{
 	
 	private Icon snakeBody;
 	private Icon normalCell;
+	private Icon fire;
+	private Icon bomb;
+	private Icon strawberry;
+	private Icon apple;
 	
 	
 	public SlitheryPanel(int width, int height) {
@@ -34,6 +38,10 @@ public class SlitheryPanel extends JPanel implements Slitherable{
 	private void loadSnakeImages() {
 		snakeBody=new ImageIcon("resources/snakeBody.png");
 		normalCell=new ImageIcon("resources/cell.png");
+		fire=new ImageIcon("resources/fire.png");
+		bomb=new ImageIcon("resources/bomb.png");
+		strawberry=new ImageIcon("resources/strawberry.png");
+		apple=new ImageIcon("resources/apple.png");
 		
 	}
 
@@ -92,6 +100,31 @@ public class SlitheryPanel extends JPanel implements Slitherable{
 	public void clearPoint(Point p) {
 		buttons[p.getX()*width+p.getY()].setIcon(normalCell);
 		
+	}
+
+	@Override
+	public void putApple(int r, int c) {
+		buttons[r*width+c].setIcon(apple);
+		
+	}
+
+	@Override
+	public void putStrawberry(int r, int c) {
+		buttons[r*width+c].setIcon(strawberry);
+		
+	}
+
+	@Override
+	public void putBomb(int r, int c) {
+		buttons[r*width+c].setIcon(bomb);
+		
+	}
+
+	@Override
+	public void putFire(int r, int c) {
+		buttons[r*width+c].setIcon(fire);
+		
+				
 	}
 
 }
