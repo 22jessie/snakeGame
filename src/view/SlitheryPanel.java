@@ -88,7 +88,7 @@ public class SlitheryPanel extends JPanel implements Slitherable{
 
 
 	@Override
-	public void splitSnakeInHalf() {
+	public void removeFire() {
 		
 	}
 
@@ -128,6 +128,11 @@ public class SlitheryPanel extends JPanel implements Slitherable{
 		buttons[r*width+c].setIcon(icons.get(ELEMENTS[2]));
 		
 				
+	}
+
+	@Override
+	public void doubleSpeed() {
+		
 	}
 
 }

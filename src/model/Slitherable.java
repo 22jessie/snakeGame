@@ -9,7 +9,7 @@ public interface Slitherable {
 
 	abstract void changeSnakeColor();
 
-	abstract void splitSnakeInHalf();
+	abstract void removeFire();
 
 	abstract void killSnake();
 
@@ -22,4 +22,6 @@ public interface Slitherable {
 	abstract void putBomb(int r, int c);
 
 	abstract void putFire(int r, int c);
+
+	abstract void doubleSpeed();
 }

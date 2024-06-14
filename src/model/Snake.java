@@ -15,7 +15,7 @@ public class Snake extends Thread {
 	private Point head;
 	private Point tail;
 	private Point prevTail;
-	
+	private int velocityMilliSeconds;
 	
 	public Snake(Point startingPosition,SlitheryArea area,Slitherable slitherable){
 		body=new ArrayList<Point>();
@@ -24,11 +24,10 @@ public class Snake extends Thread {
 		alive=true;
 		this.area=area;
 		this.slitherable=slitherable;
+		velocityMilliSeconds=1400;
 	}
-	
 
 	public void run() {
-		
 		try {
 			sleep(1300);
 			moveRight();
@@ -41,7 +40,7 @@ public class Snake extends Thread {
 					}
 				}
 				showSnake();
-				sleep(1000);
+				sleep(velocityMilliSeconds);
 			}
 		}catch(DeadSnakeException e) {
 		}
@@ -61,7 +60,6 @@ public class Snake extends Thread {
 		slitherable.clearPoint(prevTail);
 	}
 	
-
 	public synchronized void moveUp() {
 		iDir=-1;
 		jDir=0;
@@ -92,33 +90,32 @@ public class Snake extends Thread {
 		body.add(tail);
 	}
 
-
 	public void changeColor() {
 		slitherable.changeSnakeColor();
-		
 	}
-
-
-	public void splitInHalf() {
-		int size;
-		int half;
-		size=body.size();
-		
-		if(size>=2) {
-			half=size/2;
-			for(int i=0; i<half;i++) {
-				body.remove(--size);
-			}
-			slitherable.splitSnakeInHalf();
-		}else {
-			die();
-		}
-	}
-
 
 	public void kill() {
 		die();
 		slitherable.killSnake();
 	}
+
+	public void doubleSpeed() {
+		velocityMilliSeconds/=2;
+		slitherable.doubleSpeed();
+		(new TimerThreadForVelocity()).start();
+	}
+	
+	private class TimerThreadForVelocity extends Thread{
+		
+		public void run() {
+			try {
+				sleep(30000);
+				velocityMilliSeconds*=2;
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 
 }

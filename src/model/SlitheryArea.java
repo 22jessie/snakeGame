@@ -46,7 +46,7 @@ public class SlitheryArea {
 				case "APPLE": 		snake.grow();			break;
 				case "STRAWBERRY":	snake.changeColor();	break;
 				case "BOMB":		snake.kill();			break;
-				case "FIRE":		snake.splitInHalf();	break;
+				case "FIRE":		snake.doubleSpeed();	break;
 				}
 			}
 		}else {
