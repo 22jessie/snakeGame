@@ -2,60 +2,84 @@ package model;
 
 import java.util.ArrayList;
 
+import model.SlitheryArea.DeadSnakeException;
+
 public class Snake extends Thread {
 	
 	private boolean alive;
-	private int dirX;
-	private int dirY;
+	private int iDir;
+	private int jDir;
 	private SlitheryArea area;
 	private Slitherable slitherable;
 	private ArrayList<Point> body;
 	private Point head;
 	private Point tail;
+	private Point prevTail;
 	
 	
-	Snake(Point startingPosition){
+	public Snake(Point startingPosition,SlitheryArea area,Slitherable slitherable){
 		body=new ArrayList<Point>();
-		head=new Point(startingPosition);
+		prevTail=tail=head=new Point(startingPosition);
 		body.add(head);
+		alive=true;
+		this.area=area;
+		this.slitherable=slitherable;
 	}
 	
 
 	public void run() {
 		
-		while(alive) {
-			area.slitherOn(head);
-			for(Point p : body) {
-				p.setPosition(p.getX()+dirX,p.getY()+dirY);
-				
+		try {
+			sleep(1300);
+			moveRight();
+			while(alive) {
+				prevTail=new Point(tail);
+				synchronized (this) {
+					area.slitherOn(new Point(head.getX()+iDir,head.getY()+jDir));
+					for(Point p : body) {
+						p.setPosition(p.getX()+iDir,p.getY()+jDir);
+					}
+				}
+				showSnake();
+				sleep(1000);
 			}
-			slitherable.showSnakeHead(head);
-			for(Point p : body) {
-				slitherable.showSnakeBody(p);
-			}
-			slitherable.showSnakeTail(tail);
+		}catch(DeadSnakeException e) {
+			System.out.println("Game Over!");
+		}
+		catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 	
-
-	public void moveUp() {
-		dirY=-1;
-	}
-
-	public void moveLeft() {
-		dirX=-1;
-	}
-
-	public void moveRight() {
-		dirX=1;
-	}
-
-	public void moveDown() {
-		dirY=1;
+	private void showSnake() {
+		slitherable.showSnakeHead(head);
+		for(Point p : body) {
+			slitherable.showSnakeBody(p);
+		}
+		slitherable.showSnakeTail(tail);
+		slitherable.clearPoint(prevTail);
 	}
 	
-	protected void eat() {
+
+	public synchronized void moveUp() {
+		iDir=-1;
+		jDir=0;
+	}
+
+	public synchronized void moveLeft() {
+		jDir=-1;
+		iDir=0;
+	}
+
+	public synchronized void moveRight() {
+		jDir=1;
+		iDir=0;
 		
+	}
+
+	public synchronized void moveDown() {
+		iDir=1;
+		jDir=0;
 	}
 	
 	protected void die() {
@@ -63,10 +87,8 @@ public class Snake extends Thread {
 	}
 	
 	public void grow() {
-		if(tail!=null) {
-			
-		}
-		body.add(new Point(0,0));
+		tail=new Point(prevTail);
+		body.add(tail);
 	}
 
 
@@ -77,8 +99,19 @@ public class Snake extends Thread {
 
 
 	public void splitInHalf() {
-		slitherable.splitSnakeInHalf();
+		int size;
+		int half;
+		size=body.size();
 		
+		if(size>=2) {
+			half=size/2;
+			for(int i=0; i<half;i++) {
+				body.remove(--size);
+			}
+			slitherable.splitSnakeInHalf();
+		}else {
+			die();
+		}
 	}
 
 

@@ -12,4 +12,6 @@ public interface Slitherable {
 	abstract void splitSnakeInHalf();
 
 	abstract void killSnake();
+
+	abstract void clearPoint(Point prevTail);
 }

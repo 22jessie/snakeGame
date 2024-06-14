@@ -13,12 +13,15 @@ public class SlitheryArea {
 	private static final String GAME_ELEMENTS[]= {"APPLE","STRAWBERRY","BOMB","FIRE"};
 	
 	
-	public SlitheryArea(Snake snake, int rows, int columns) {
+	public SlitheryArea(int rows, int columns) {
 		this.rows=rows;
 		this.columns=columns;
-		this.snake=snake;
 		cellsWithElements=new HashMap<Point, String>();
 
+	}
+	
+	public void setSnake(Snake s) {
+		snake=s;
 	}
 	
 	public void generateRandomElement() {
@@ -35,16 +38,33 @@ public class SlitheryArea {
 	}
 	
 	
-	void slitherOn(Point p) {
+	void slitherOn(Point p) throws DeadSnakeException{
 		String val;
-		if(cellsWithElements.containsKey(p)) {
-			val=cellsWithElements.get(p);
-			switch(val) {
-			case "APPLE": 		snake.grow();			break;
-			case "STRAWBERRY":	snake.changeColor();	break;
-			case "BOMB":		snake.kill();			break;
-			case "FIRE":		snake.splitInHalf();	break;
-			}
+		
+		if(p.getX()>=0 && p.getX()<rows && p.getY()>=0 && p.getY()<columns) {
+			if(cellsWithElements.containsKey(p)) {
+				val=cellsWithElements.get(p);
+				switch(val) {
+				case "APPLE": 		snake.grow();			break;
+				case "STRAWBERRY":	snake.changeColor();	break;
+				case "BOMB":		snake.kill();			break;
+				case "FIRE":		snake.splitInHalf();	break;
+				}
+			}	
+		}else {
+			snake.kill();
+			throw new DeadSnakeException("The Snake has crossed the board's limit");
 		}
 	}	
+	
+	public class DeadSnakeException extends RuntimeException{
+		public DeadSnakeException(String m) {
+			super(m);
+		}
+
+		private static final long serialVersionUID = 1L;
+		
+		
+		
+	}
 }

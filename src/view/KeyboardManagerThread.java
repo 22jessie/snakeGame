@@ -8,6 +8,11 @@ import model.SnakeMotionManagerThread;
 public class KeyboardManagerThread extends SnakeMotionManagerThread{
 	private int keyCode;
 	private Snake snake;
+	
+	
+	public KeyboardManagerThread(Snake snake) {
+		this.snake=snake;
+	}
 
 	@Override
 	public void run() {

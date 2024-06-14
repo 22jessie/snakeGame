@@ -29,5 +29,9 @@ public class Point {
 	public boolean equals(Point p2) {
 		return p2.getX()==x && p2.getY()==y;
 	}
+	
+	public String toString() {
+		return "["+x+","+y+"]";
+	}
 
 }
