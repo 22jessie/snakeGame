@@ -1,5 +1,7 @@
 package model;
 
+import model.board_elements.BoardElement;
+
 public interface Slitherable {
 	abstract void showSnakeHead(Point head);
 
@@ -9,19 +11,9 @@ public interface Slitherable {
 
 	abstract void changeSnakeColor();
 
-	abstract void removeFire();
-
 	abstract void killSnake();
 
 	abstract void clearPoint(Point prevTail);
 
-	abstract void putApple(int r, int c);
-
-	abstract void putStrawberry(int r, int c);
-
-	abstract void putBomb(int r, int c);
-
-	abstract void putFire(int r, int c);
-
-	abstract void doubleSpeed();
+	abstract void putBoardElement(Point x, BoardElement element);
 }

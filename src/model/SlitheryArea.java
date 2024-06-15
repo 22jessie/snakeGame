@@ -4,24 +4,26 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import model.board_elements.BoardElement;
+import model.board_elements.BoardElementFactory;
+
 public class SlitheryArea {
 	
 	private final static int MAX_ELEMENTS_IN_BOARD=2;
 	
 	private int rows;
 	private int columns;
-	private Map<Point,String> cellsWithElements;
+	private Map<Point,BoardElement> cellsWithElements;
 	private Snake snake;
 	private Slitherable slitherable;
+	private BoardElementFactory boardElementsFact;
 	
-	private static final String GAME_ELEMENTS[]= {"APPLE","STRAWBERRY","BOMB","FIRE"};
-	
-	
-	public SlitheryArea(int rows, int columns) {
+	public SlitheryArea(int rows, int columns,Snake snake) {
 		this.rows=rows;
 		this.columns=columns;
-		cellsWithElements=new HashMap<Point, String>();
+		cellsWithElements=new HashMap<Point, BoardElement>();
 		(new ElementGenerator()).start();
+		boardElementsFact=new BoardElementFactory(snake);
 
 	}
 	
@@ -37,17 +39,10 @@ public class SlitheryArea {
 	
 	
 	void slitherOn(Point p) throws DeadSnakeException{
-		String val;
 		if(p.getX()>=0 && p.getX()<rows && p.getY()>=0 && p.getY()<columns) {
 			if(cellsWithElements.containsKey(p)) {
-				val=cellsWithElements.get(p);
+				cellsWithElements.get(p).slitheOn();
 				removePoint(p);
-				switch(val) {
-				case "APPLE": 		snake.grow();			break;
-				case "STRAWBERRY":	snake.changeColor();	break;
-				case "BOMB":		snake.kill();			break;
-				case "FIRE":		snake.doubleSpeed();	break;
-				}
 			}
 		}else {
 			snake.kill();
@@ -61,6 +56,8 @@ public class SlitheryArea {
 	
 	
 	public class ElementGenerator extends Thread {
+		
+		
 
 		public void run() {
 			try {
@@ -78,22 +75,14 @@ public class SlitheryArea {
 		
 		public void generateRandomElement() {
 			Random rand;
-			int newElement;
-			int r;
-			int c;
+			Point x;
+			BoardElement element;
 			
 			rand=new Random();
-			newElement=rand.nextInt(GAME_ELEMENTS.length);
-			r=rand.nextInt(rows);
-			c=rand.nextInt(columns);
-			Point x= new Point(r,c);
-			cellsWithElements.put(x, GAME_ELEMENTS[newElement]);
-			switch(GAME_ELEMENTS[newElement]) {
-			case "APPLE": 		slitherable.putApple(r,c);			break;
-			case "STRAWBERRY":	slitherable.putStrawberry(r,c);		break;
-			case "BOMB":		slitherable.putBomb(r,c);			break;
-			case "FIRE":		slitherable.putFire(r,c);			break;
-			}
+			x= new Point(rand.nextInt(rows),rand.nextInt(columns));
+			element=boardElementsFact.createRandomElement();
+			cellsWithElements.put(x,element);
+			slitherable.putBoardElement(x,element);
 		}
 	}
 

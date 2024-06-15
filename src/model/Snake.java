@@ -9,7 +9,7 @@ public class Snake extends Thread {
 	private boolean alive;
 	private int iDir;
 	private int jDir;
-	private SlitheryArea area;
+	private SlitheryArea slitheryArea;
 	private Slitherable slitherable;
 	private ArrayList<Point> body;
 	private Point head;
@@ -17,14 +17,13 @@ public class Snake extends Thread {
 	private Point prevTail;
 	private int velocityMilliSeconds;
 	
-	public Snake(Point startingPosition,SlitheryArea area,Slitherable slitherable){
+	public Snake(Point startingPosition,Slitherable slitherable){
 		body=new ArrayList<Point>();
 		prevTail=tail=head=new Point(startingPosition);
 		body.add(head);
 		alive=true;
-		this.area=area;
-		this.slitherable=slitherable;
 		velocityMilliSeconds=1400;
+		this.slitherable=slitherable;
 	}
 
 	public void run() {
@@ -34,7 +33,7 @@ public class Snake extends Thread {
 			while(alive) {
 				prevTail=new Point(tail);
 				synchronized (this) {
-					area.slitherOn(new Point(head.getX()+iDir,head.getY()+jDir));
+					slitheryArea.slitherOn(new Point(head.getX()+iDir,head.getY()+jDir));
 					for(Point p : body) {
 						p.setPosition(p.getX()+iDir,p.getY()+jDir);
 					}
@@ -73,7 +72,6 @@ public class Snake extends Thread {
 	public synchronized void moveRight() {
 		jDir=1;
 		iDir=0;
-		
 	}
 
 	public synchronized void moveDown() {
@@ -101,12 +99,10 @@ public class Snake extends Thread {
 
 	public void doubleSpeed() {
 		velocityMilliSeconds/=2;
-		slitherable.doubleSpeed();
 		(new TimerThreadForVelocity()).start();
 	}
 	
 	private class TimerThreadForVelocity extends Thread{
-		
 		public void run() {
 			try {
 				sleep(30000);
@@ -115,6 +111,12 @@ public class Snake extends Thread {
 				e.printStackTrace();
 			}
 		}
+	}
+
+
+	public void setSlitheryArea(SlitheryArea a) {
+		slitheryArea=a;
+		
 	}
 	
 

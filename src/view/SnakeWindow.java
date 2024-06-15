@@ -47,8 +47,9 @@ public class SnakeWindow extends JFrame{
 	
 	private void createGameElements() {
 		SlitheryArea area;
-		area=new SlitheryArea(BOARD_ROWS, BOARD_COL);
-		snake=new Snake(new Point(BOARD_ROWS/2,BOARD_COL/2),area,panel);
+		snake=new Snake(new Point(BOARD_ROWS/2,BOARD_COL/2), panel);
+		area=new SlitheryArea(BOARD_ROWS, BOARD_COL,snake);
+		snake.setSlitheryArea(area);
 		area.setSnake(snake);
 		area.setSlitherable(panel);
 		snake.start();
