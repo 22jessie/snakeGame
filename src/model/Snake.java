@@ -11,19 +11,48 @@ public class Snake extends Thread {
 	private int jDir;
 	private SlitheryArea slitheryArea;
 	private Slitherable slitherable;
-	private ArrayList<Point> body;
-	private Point head;
-	private Point tail;
-	private Point prevTail;
+	private ArrayList<SnakeFragment> body;
+	private SnakeFragment head;
+	private SnakeFragment tail;
 	private int velocityMilliSeconds;
 	
 	public Snake(Point startingPosition,Slitherable slitherable){
-		body=new ArrayList<Point>();
-		prevTail=tail=head=new Point(startingPosition);
+		body=new ArrayList<SnakeFragment>();
+		tail=head=new SnakeFragment(startingPosition);
 		body.add(head);
 		alive=true;
 		velocityMilliSeconds=1400;
 		this.slitherable=slitherable;
+	}
+	
+	
+	private void moveSnake() {
+		int i,j;
+		
+		head.addUpCoordinates(iDir,jDir);
+		for(i=1,j=body.size(); i <j; i++ ) {
+			body.get(i).moveTo(body.get(i-1).getPreviousPosition());
+		}
+	}
+	
+	private void showSnake() {
+		Point previousTailPosition;
+		
+		slitherable.showSnakeHead(head.getPosition());
+		for(SnakeFragment f : body) {
+			slitherable.showSnakeBody(f.getPosition());
+		}
+		slitherable.showSnakeTail(tail.getPosition());
+		previousTailPosition=tail.getPreviousPosition();
+		if(previousTailPosition!=null) {
+			slitherable.clearPoint(previousTailPosition);
+		}
+	}
+	
+	public synchronized void grow() {
+		SnakeFragment f=new SnakeFragment(tail.getPreviousPosition());
+		body.add(f);
+		tail=f;
 	}
 
 	public void run() {
@@ -31,14 +60,12 @@ public class Snake extends Thread {
 			sleep(1300);
 			moveRight();
 			while(alive) {
-				prevTail=new Point(tail);
 				synchronized (this) {
-					slitheryArea.slitherOn(new Point(head.getX()+iDir,head.getY()+jDir));
-					for(Point p : body) {
-						p.setPosition(p.getX()+iDir,p.getY()+jDir);
-					}
+					Point p = new Point(head.getPosition());
+					slitheryArea.slitherOn(new Point(p.getX()+iDir,p.getY()+jDir));
+					moveSnake();
+					showSnake();
 				}
-				showSnake();
 				sleep(velocityMilliSeconds);
 			}
 		}catch(DeadSnakeException e) {
@@ -50,14 +77,7 @@ public class Snake extends Thread {
 		}
 	}
 	
-	private void showSnake() {
-		slitherable.showSnakeHead(head);
-		for(Point p : body) {
-			slitherable.showSnakeBody(p);
-		}
-		slitherable.showSnakeTail(tail);
-		slitherable.clearPoint(prevTail);
-	}
+	
 	
 	public synchronized void moveUp() {
 		iDir=-1;
@@ -81,11 +101,6 @@ public class Snake extends Thread {
 	
 	protected void die() {
 		alive=false;
-	}
-	
-	public void grow() {
-		tail=new Point(prevTail);
-		body.add(tail);
 	}
 
 	public void changeColor() {

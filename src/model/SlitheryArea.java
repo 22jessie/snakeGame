@@ -14,7 +14,7 @@ import model.board_elements.BoardElementFactory;
 
 public class SlitheryArea {
 	
-	private final static int MAX_ELEMENTS_IN_BOARD=1;
+	private final static int MAX_ELEMENTS_IN_BOARD=4;
 	
 	private int rows;
 	private int columns;
@@ -71,7 +71,7 @@ public class SlitheryArea {
 					if(cellsWithElements.size()<MAX_ELEMENTS_IN_BOARD || bombsInBoard() >= MAX_ELEMENTS_IN_BOARD) {
 						generateRandomElement();
 					}
-					sleep(10000);
+					sleep(5000);
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();

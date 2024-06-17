@@ -10,7 +10,8 @@ class Strawberry extends BoardElement {
 
 	@Override
 	public void slitheOn() {
-		snake.changeColor();
+		//snake.changeColor();
+		snake.grow();
 	}
 
 	@Override

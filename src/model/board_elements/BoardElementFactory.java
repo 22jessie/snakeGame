@@ -18,7 +18,7 @@ public class BoardElementFactory {
 	public BoardElement createRandomElement() {
 		int rand;
 		
-		rand=(new Random()).nextInt(3);
+		rand=(new Random()).nextInt(5);
 		switch(rand) {
 		case 0: return new Potion(snake,slitheryArea);
 		case 1: return new Bomb(snake);
