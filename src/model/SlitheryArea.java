@@ -1,15 +1,20 @@
 package model;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import model.board_elements.BoardElement;
+import model.board_elements.Bomb;
 import model.board_elements.BoardElementFactory;
 
 public class SlitheryArea {
 	
-	private final static int MAX_ELEMENTS_IN_BOARD=2;
+	private final static int MAX_ELEMENTS_IN_BOARD=1;
 	
 	private int rows;
 	private int columns;
@@ -21,9 +26,9 @@ public class SlitheryArea {
 	public SlitheryArea(int rows, int columns,Snake snake) {
 		this.rows=rows;
 		this.columns=columns;
-		cellsWithElements=new HashMap<Point, BoardElement>();
+		cellsWithElements=new ConcurrentHashMap<Point, BoardElement>();
 		(new ElementGenerator()).start();
-		boardElementsFact=new BoardElementFactory(snake);
+		boardElementsFact=new BoardElementFactory(snake,this);
 
 	}
 	
@@ -63,7 +68,7 @@ public class SlitheryArea {
 			try {
 				sleep(2000);
 				while(true) {
-					if(cellsWithElements.size()<MAX_ELEMENTS_IN_BOARD) {
+					if(cellsWithElements.size()<MAX_ELEMENTS_IN_BOARD || bombsInBoard() >= MAX_ELEMENTS_IN_BOARD) {
 						generateRandomElement();
 					}
 					sleep(10000);
@@ -80,9 +85,11 @@ public class SlitheryArea {
 			
 			rand=new Random();
 			x= new Point(rand.nextInt(rows),rand.nextInt(columns));
+			
 			element=boardElementsFact.createRandomElement();
 			cellsWithElements.put(x,element);
 			slitherable.putBoardElement(x,element);
+			
 		}
 	}
 
@@ -93,5 +100,30 @@ public class SlitheryArea {
 		}
 
 		private static final long serialVersionUID = 1L;
+	}
+
+	private int bombsInBoard() {
+		int n;
+		n=0;
+		for(BoardElement e : cellsWithElements.values()) {
+			if(e instanceof Bomb) {
+				n++;
+			}
+		}
+		return n;
+	}
+	
+	public void removeFire() {
+		Entry<Point,BoardElement> entry;
+		
+		
+		for(Iterator<Entry<Point, BoardElement>> i=cellsWithElements.entrySet().iterator();i.hasNext();) {
+			entry=i.next();
+			if(entry.getValue() instanceof Bomb) {
+				slitherable.clearPoint(entry.getKey());
+				cellsWithElements.remove(entry.getKey());
+			}
+		}
+		
 	}
 }

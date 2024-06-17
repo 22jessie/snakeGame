@@ -2,7 +2,7 @@ package model.board_elements;
 
 import model.Snake;
 
-class Fire extends BoardElement {
+public class Fire extends BoardElement {
 
 	public Fire(Snake s) {
 		super(s);
