@@ -1,11 +1,9 @@
 package model;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import model.board_elements.BoardElement;
@@ -48,6 +46,7 @@ public class SlitheryArea {
 			if(cellsWithElements.containsKey(p)) {
 				cellsWithElements.get(p).slitheOn();
 				removePoint(p);
+				
 			}
 		}else {
 			snake.kill();
@@ -62,14 +61,15 @@ public class SlitheryArea {
 	
 	public class ElementGenerator extends Thread {
 		
-		
-
 		public void run() {
 			try {
 				sleep(2000);
 				while(true) {
-					if(cellsWithElements.size()<MAX_ELEMENTS_IN_BOARD || bombsInBoard() >= MAX_ELEMENTS_IN_BOARD) {
+					if(canGenerateNewElement()) {
 						generateRandomElement();
+					}
+					if(!snake.isAlive()) {
+						break;
 					}
 					sleep(5000);
 				}
@@ -78,17 +78,24 @@ public class SlitheryArea {
 			}
 		}
 		
+		private boolean canGenerateNewElement() {
+			return (cellsWithElements.size()<MAX_ELEMENTS_IN_BOARD || bombsInBoard() >= MAX_ELEMENTS_IN_BOARD); 
+		}
+		
 		public void generateRandomElement() {
 			Random rand;
 			Point x;
 			BoardElement element;
 			
 			rand=new Random();
-			x= new Point(rand.nextInt(rows),rand.nextInt(columns));
-			
-			element=boardElementsFact.createRandomElement();
-			cellsWithElements.put(x,element);
+			synchronized(snake) {
+				do {
+					x= new Point(rand.nextInt(rows),rand.nextInt(columns));
+				}while(snake.occupiesPoint(x));
+				element=boardElementsFact.createRandomElement();
+			}
 			slitherable.putBoardElement(x,element);
+			cellsWithElements.put(x,element);
 			
 		}
 	}

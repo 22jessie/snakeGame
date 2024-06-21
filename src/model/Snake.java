@@ -57,12 +57,16 @@ public class Snake extends Thread {
 
 	public void run() {
 		try {
-			sleep(1300);
+			sleep(1000);
 			moveRight();
 			while(alive) {
 				synchronized (this) {
-					Point p = new Point(head.getPosition());
-					slitheryArea.slitherOn(new Point(p.getX()+iDir,p.getY()+jDir));
+					Point nextPosition = new Point(head.getPosition());
+					nextPosition.setPosition(nextPosition.getX()+iDir, nextPosition.getY()+jDir);
+					if(occupiesPoint(nextPosition)) {
+						break;
+					}
+					slitheryArea.slitherOn(nextPosition);
 					moveSnake();
 					showSnake();
 				}
@@ -132,6 +136,11 @@ public class Snake extends Thread {
 	public void setSlitheryArea(SlitheryArea a) {
 		slitheryArea=a;
 		
+	}
+
+
+	public boolean occupiesPoint(Point p) {
+		return body.contains(new SnakeFragment(p));
 	}
 	
 

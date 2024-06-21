@@ -31,5 +31,26 @@ public class SnakeFragment{
 		position.setPosition(p.getX(),p.getY());
 		
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(o instanceof SnakeFragment) {
+			SnakeFragment s=(SnakeFragment)o;
+			return position.equals(s.getPosition());
+		}
+		return false;
+	}
+	
+	
+	
+	@Override
+	public int hashCode() {
+	    return position.hashCode();
+	}
+	
+	@Override
+	public String toString() {
+		return position.toString();
+	}
 
 }
