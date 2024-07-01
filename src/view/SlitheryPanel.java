@@ -8,15 +8,14 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import model.Point;
-import model.Slitherable;
 import model.board_elements.BoardElement;
 
-public class SlitheryPanel extends JPanel implements Slitherable{
+public class SlitheryPanel extends JPanel{
 
 	private static final long serialVersionUID = 1L;
 	
-	private int width;
-	private int height;	
+	private int rows;
+	private int columns;	
 	private JButton buttons[];
 	private ImageIcon cellIcon;
 	private ImageIcon snakeBodyIcon;
@@ -24,8 +23,8 @@ public class SlitheryPanel extends JPanel implements Slitherable{
 
 	public SlitheryPanel(int width, int height) {
 		
-		this.width=width;
-		this.height=height;
+		this.rows=width;
+		this.columns=height;
 		cellIcon=new ImageIcon("resources/cell.png");
 		snakeBodyIcon=new ImageIcon("resources/snakeBody.png");
 		setLayout(new GridLayout(width,height));
@@ -35,57 +34,51 @@ public class SlitheryPanel extends JPanel implements Slitherable{
 	private void createSlitheryBoard() {
 		JButton b;
 		
-		buttons=new JButton[width*height];
-		for(int i=0; i < width; i++) {
-			for(int j=0; j < height; j++) {
+		buttons=new JButton[rows*columns];
+		for(int i=0; i < rows; i++) {
+			for(int j=0; j < columns; j++) {
 				b=new JButton();
 				b.setIcon(cellIcon);
-				buttons[i*width+j]=b;
+				buttons[i*columns+j]=b;
 				add(b);
 			}
 		}
 	}
 
 
-	@Override
+
 	public void showSnakeHead(Point p) {
 		showSnakeBody(p);
 	}
 
 
-	@Override
 	public void showSnakeBody(Point p) {
-		buttons[p.getX()*width+p.getY()].setIcon(snakeBodyIcon);
+		buttons[p.getX()*columns+p.getY()].setIcon(snakeBodyIcon);
 	}
 
 
-	@Override
 	public void showSnakeTail(Point p) {
 		showSnakeBody(p);
 	}
 
 
-	@Override
 	public void changeSnakeColor() {
 		//
 	}
 
 
-	@Override
 	public void killSnake() {
 		
 		
 	}
 
-	@Override
 	public void clearPoint(Point p) {
-		buttons[p.getX()*width+p.getY()].setIcon(cellIcon);
+		buttons[p.getX()*columns+p.getY()].setIcon(cellIcon);
 		
 	}
 
-	@Override
 	public void putBoardElement(Point pos,BoardElement element) {
-		buttons[pos.getX()*width+pos.getY()].setIcon(getIcon(element.getImagePath()));
+		buttons[pos.getX()*columns+pos.getY()].setIcon(getIcon(element.getImagePath()));
 	}
 	
 	private Icon getIcon(String imagePath) {

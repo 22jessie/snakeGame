@@ -2,25 +2,27 @@ package view;
 
 import java.awt.event.KeyEvent;
 
-import model.Snake;
+import controller.SnakeController;
 import model.SnakeMotionManagerThread;
 
 public class KeyboardManagerThread extends SnakeMotionManagerThread{
 	private int keyCode;
-	private Snake snake;
+	private SnakeController controller;
+	
+
 	
 	
-	public KeyboardManagerThread(Snake snake) {
-		this.snake=snake;
+	public KeyboardManagerThread(SnakeController controller) {
+		this.controller=controller;
 	}
 
 	@Override
 	public void run() {
 		switch( keyCode ) { 
-		case KeyEvent.VK_UP:	snake.moveUp();		break;
-		case KeyEvent.VK_DOWN:	snake.moveDown();	break;	
-		case KeyEvent.VK_LEFT:	snake.moveLeft();	break;
-		case KeyEvent.VK_RIGHT:	snake.moveRight();	break;
+		case KeyEvent.VK_UP:	controller.moveSnakeUp();		break;
+		case KeyEvent.VK_DOWN:	controller.moveSnakeDown();		break;	
+		case KeyEvent.VK_LEFT:	controller.moveSnakeLeft();	 	break;
+		case KeyEvent.VK_RIGHT:	controller.moveSnakeRight();	break;
 		default: ;
 		}
 

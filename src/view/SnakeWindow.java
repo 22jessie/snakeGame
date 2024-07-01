@@ -6,12 +6,14 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 
-import model.Snake;
+import controller.SnakeController;
 import model.Point;
-import model.SlitheryArea;
+import model.Slitherable;
+import model.board_elements.BoardElement;
+import model.Constants;
 
 
-public class SnakeWindow extends JFrame{
+public class SnakeWindow extends JFrame implements Constants,Slitherable{
 	/**
 	 * 
 	 */
@@ -19,40 +21,26 @@ public class SnakeWindow extends JFrame{
 	
 	public static int WINDOW_WIDTH_PX=300;
 	public static int WINDOW_HEIGHT_PX=300;
-	
-	public static int BOARD_ROWS=10;
-	public static int BOARD_COL=10;
+
 	
 	
-	private Snake snake;
+	
 	private SlitheryPanel panel;
+	private SnakeController control;
 	
 	
-	public SnakeWindow() {
+	public SnakeWindow(SnakeController control) {
+		
+		this.control=control;
 		panel=new SlitheryPanel(BOARD_ROWS,BOARD_COL);
 		add(panel);
-		
 		setSize(WINDOW_WIDTH_PX,WINDOW_HEIGHT_PX);
-		setTitle("Snake Game :)");
+		setTitle(GAME_NAME);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		configureKeyListener();
-		createGameElements();
 		setFocusable(true);
 		setVisible(true);
-		
-		
-		
-	}
-	
-	private void createGameElements() {
-		SlitheryArea area;
-		snake=new Snake(new Point(BOARD_ROWS/2,BOARD_COL/2), panel);
-		area=new SlitheryArea(BOARD_ROWS, BOARD_COL,snake);
-		snake.setSlitheryArea(area);
-		area.setSnake(snake);
-		area.setSlitherable(panel);
-		snake.start();
 	}
 
 
@@ -68,12 +56,55 @@ public class SnakeWindow extends JFrame{
 			@Override
 			public void keyPressed(KeyEvent e) {
 				KeyboardManagerThread t;
-				t=new KeyboardManagerThread(snake);
+				t=new KeyboardManagerThread(control);
 				t.setDirection(e.getKeyCode());
 				t.start();
 			}
 		});
 		
+	}
+
+
+
+	@Override
+	public void showSnakeHead(Point head) {
+		panel.showSnakeHead(head);
+	}
+
+
+	@Override
+	public void showSnakeBody(Point p) {
+		panel.showSnakeBody(p);
+	}
+
+
+	@Override
+	public void showSnakeTail(Point tail) {
+		panel.showSnakeTail(tail);
+	}
+
+
+	@Override
+	public void changeSnakeColor() {
+		panel.changeSnakeColor();
+	}
+
+
+	@Override
+	public void killSnake() {
+		panel.killSnake();
+	}
+
+
+	@Override
+	public void clearPoint(Point prevTail) {
+		panel.clearPoint(prevTail);
+	}
+
+
+	@Override
+	public void putBoardElement(Point x, BoardElement element) {
+		panel.putBoardElement(x, element);
 	}
 	
 }
