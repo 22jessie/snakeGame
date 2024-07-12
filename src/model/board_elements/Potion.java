@@ -1,7 +1,7 @@
 package model.board_elements;
 
 import model.SlitheryArea;
-import model.Snake;
+import model.snake.Snake;
 
 public class Potion extends BoardElement {
 	private SlitheryArea slitheryArea;

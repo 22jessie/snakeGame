@@ -2,7 +2,7 @@ package controller;
 
 import model.Point;
 import model.SlitheryArea;
-import model.Snake;
+import model.snake.Snake;
 import view.SnakeWindow;
 import model.Constants;
 

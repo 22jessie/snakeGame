@@ -3,7 +3,7 @@ package view;
 import java.awt.event.KeyEvent;
 
 import controller.SnakeController;
-import model.SnakeMotionManagerThread;
+import model.snake.SnakeMotionManagerThread;
 
 public class KeyboardManagerThread extends SnakeMotionManagerThread{
 	private int keyCode;

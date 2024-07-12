@@ -1,6 +1,6 @@
 package model.board_elements;
 
-import model.Snake;
+import model.snake.Snake;
 
 class Strawberry extends BoardElement {
 
@@ -10,8 +10,7 @@ class Strawberry extends BoardElement {
 
 	@Override
 	public void slitheOn() {
-		//snake.changeColor();
-		snake.grow();
+		snake.changeColor();
 	}
 
 	@Override

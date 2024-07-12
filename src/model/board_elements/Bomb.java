@@ -1,6 +1,6 @@
 package model.board_elements;
 
-import model.Snake;
+import model.snake.Snake;
 
 public class Bomb extends BoardElement {
 

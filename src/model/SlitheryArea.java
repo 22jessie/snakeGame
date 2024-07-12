@@ -8,6 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import model.board_elements.BoardElement;
 import model.board_elements.Bomb;
+import model.snake.Snake;
 import model.board_elements.BoardElementFactory;
 
 public class SlitheryArea {
@@ -41,11 +42,12 @@ public class SlitheryArea {
 	
 	
 	
-	void slitherOn(Point p) throws DeadSnakeException{
+	public void slitherOn(Point p) throws DeadSnakeException{
 		if(p.getX()>=0 && p.getX()<rows && p.getY()>=0 && p.getY()<columns) {
 			if(cellsWithElements.containsKey(p)) {
 				cellsWithElements.get(p).slitheOn();
 				removePoint(p);
+				slitherable.clearElement(p);
 				
 			}
 		}else {
@@ -127,7 +129,7 @@ public class SlitheryArea {
 		for(Iterator<Entry<Point, BoardElement>> i=cellsWithElements.entrySet().iterator();i.hasNext();) {
 			entry=i.next();
 			if(entry.getValue() instanceof Bomb) {
-				slitherable.clearPoint(entry.getKey());
+				slitherable.clearElement(entry.getKey());
 				cellsWithElements.remove(entry.getKey());
 			}
 		}

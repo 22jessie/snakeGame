@@ -1,7 +1,10 @@
-package model;
+package model.snake;
 
 import java.util.ArrayList;
 
+import model.Point;
+import model.Slitherable;
+import model.SlitheryArea;
 import model.SlitheryArea.DeadSnakeException;
 
 public class Snake extends Thread {
@@ -15,6 +18,7 @@ public class Snake extends Thread {
 	private SnakeFragment head;
 	private SnakeFragment tail;
 	private int velocityMilliSeconds;
+	 
 	
 	public Snake(Point startingPosition,Slitherable slitherable){
 		body=new ArrayList<SnakeFragment>();
@@ -108,12 +112,22 @@ public class Snake extends Thread {
 	}
 
 	public void changeColor() {
-		slitherable.changeSnakeColor();
+		String color=SnakeColorGenerator.generateRandomColorAsHex();
+		
+		slitherable.setSnakeColor(color);
+		slitherable.changeSnakeColor(head.getPosition(),color);
+		for(SnakeFragment f : body) {
+			slitherable.changeSnakeColor(f.getPosition(),color);
+		}
+		slitherable.changeSnakeColor(tail.getPosition(),color);
 	}
 
 	public void kill() {
 		die();
-		slitherable.killSnake();
+	}
+	
+	public void cleanCell(Point p) {
+		slitherable.clearPoint(p);
 	}
 
 	public void doubleSpeed() {

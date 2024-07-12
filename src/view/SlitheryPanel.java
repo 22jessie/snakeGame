@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 
 import javax.swing.Icon;
@@ -9,6 +10,7 @@ import javax.swing.JPanel;
 
 import model.Point;
 import model.board_elements.BoardElement;
+import model.snake.SnakeColorGenerator;
 
 public class SlitheryPanel extends JPanel{
 
@@ -17,18 +19,17 @@ public class SlitheryPanel extends JPanel{
 	private int rows;
 	private int columns;	
 	private JButton buttons[];
-	private ImageIcon cellIcon;
-	private ImageIcon snakeBodyIcon;
+	private final Color backgroundColor=Color.decode("#000000");
+	private Color currentColor;
 	
 
 	public SlitheryPanel(int width, int height) {
 		
 		this.rows=width;
 		this.columns=height;
-		cellIcon=new ImageIcon("resources/cell.png");
-		snakeBodyIcon=new ImageIcon("resources/snakeBody.png");
 		setLayout(new GridLayout(width,height));
 		createSlitheryBoard();
+		currentColor=Color.decode(SnakeColorGenerator.getInitialColor());
 	}
 
 	private void createSlitheryBoard() {
@@ -38,7 +39,7 @@ public class SlitheryPanel extends JPanel{
 		for(int i=0; i < rows; i++) {
 			for(int j=0; j < columns; j++) {
 				b=new JButton();
-				b.setIcon(cellIcon);
+				b.setBackground(backgroundColor);
 				buttons[i*columns+j]=b;
 				add(b);
 			}
@@ -53,7 +54,7 @@ public class SlitheryPanel extends JPanel{
 
 
 	public void showSnakeBody(Point p) {
-		buttons[p.getX()*columns+p.getY()].setIcon(snakeBodyIcon);
+		buttons[p.getX()*columns+p.getY()].setBackground(currentColor);
 	}
 
 
@@ -62,18 +63,16 @@ public class SlitheryPanel extends JPanel{
 	}
 
 
-	public void changeSnakeColor() {
-		//
+	public void changeSnakeColor(Point p,Color color) {
+		buttons[p.getX()*columns+p.getY()].setBackground(color);
 	}
-
-
-	public void killSnake() {
-		
-		
+	
+	public void setSnakeColor(String colorHex) {
+		currentColor=Color.decode(colorHex);
 	}
-
 	public void clearPoint(Point p) {
-		buttons[p.getX()*columns+p.getY()].setIcon(cellIcon);
+		buttons[p.getX()*columns+p.getY()].setBackground(backgroundColor);
+		
 		
 	}
 
@@ -83,6 +82,11 @@ public class SlitheryPanel extends JPanel{
 	
 	private Icon getIcon(String imagePath) {
 		return new ImageIcon(imagePath);
+	}
+
+	public void clearElement(Point p) {
+		buttons[p.getX()*columns+p.getY()].setIcon(null);
+		
 	}
 
 }

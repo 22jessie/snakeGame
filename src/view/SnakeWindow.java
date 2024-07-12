@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -83,19 +84,6 @@ public class SnakeWindow extends JFrame implements Constants,Slitherable{
 		panel.showSnakeTail(tail);
 	}
 
-
-	@Override
-	public void changeSnakeColor() {
-		panel.changeSnakeColor();
-	}
-
-
-	@Override
-	public void killSnake() {
-		panel.killSnake();
-	}
-
-
 	@Override
 	public void clearPoint(Point prevTail) {
 		panel.clearPoint(prevTail);
@@ -105,6 +93,27 @@ public class SnakeWindow extends JFrame implements Constants,Slitherable{
 	@Override
 	public void putBoardElement(Point x, BoardElement element) {
 		panel.putBoardElement(x, element);
+	}
+
+
+	@Override
+	public void changeSnakeColor(Point p, String colorHex) {
+		panel.changeSnakeColor(p,Color.decode(colorHex));
+		
+	}
+
+
+	@Override
+	public void clearElement(Point p) {
+		panel.clearElement(p);
+		
+	}
+
+
+	@Override
+	public void setSnakeColor(String colorHex) {
+		panel.setSnakeColor(colorHex);
+		
 	}
 	
 }

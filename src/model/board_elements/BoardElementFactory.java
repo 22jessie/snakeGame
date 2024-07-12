@@ -3,7 +3,7 @@ package model.board_elements;
 import java.util.Random;
 
 import model.SlitheryArea;
-import model.Snake;
+import model.snake.Snake;
 
 public class BoardElementFactory {
 	private Snake snake;

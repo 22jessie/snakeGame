@@ -3,17 +3,19 @@ package model;
 import model.board_elements.BoardElement;
 
 public interface Slitherable {
-	abstract void showSnakeHead(Point head);
+	void showSnakeHead(Point head);
 
-	abstract void showSnakeBody(Point p);
+	void showSnakeBody(Point p);
 
-	abstract void showSnakeTail(Point tail);
+	void showSnakeTail(Point tail);
 
-	abstract void changeSnakeColor();
+	void changeSnakeColor(Point p, String colorAsHex);
 
-	abstract void killSnake();
+	void clearPoint(Point prevTail);
 
-	abstract void clearPoint(Point prevTail);
+	void putBoardElement(Point x, BoardElement element);
 
-	abstract void putBoardElement(Point x, BoardElement element);
+	void clearElement(Point p);
+	
+	void setSnakeColor(String colorHex);
 }

@@ -1,4 +1,6 @@
-package model;
+package model.snake;
+
+import model.Point;
 
 public class SnakeFragment{
 	private Point position;
@@ -8,6 +10,7 @@ public class SnakeFragment{
 	public SnakeFragment(Point position) {
 		this.position=new Point(position);
 	}
+	
 	
 	public Point getPreviousPosition() {
 		return previousPosition;
