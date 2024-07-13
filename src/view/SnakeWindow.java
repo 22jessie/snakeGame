@@ -33,7 +33,7 @@ public class SnakeWindow extends JFrame implements Constants,Slitherable{
 	public SnakeWindow(SnakeController control) {
 		
 		this.control=control;
-		panel=new SlitheryPanel(BOARD_ROWS,BOARD_COL);
+		panel=new SlitheryPanel(BOARD_ROWS,BOARD_COLS);
 		add(panel);
 		setSize(WINDOW_WIDTH_PX,WINDOW_HEIGHT_PX);
 		setTitle(GAME_NAME);
@@ -85,26 +85,26 @@ public class SnakeWindow extends JFrame implements Constants,Slitherable{
 	}
 
 	@Override
-	public void clearPoint(Point prevTail) {
+	public void clearCell(Point prevTail) {
 		panel.clearPoint(prevTail);
 	}
 
 
 	@Override
-	public void putBoardElement(Point x, BoardElement element) {
+	public void putElementInCell(Point x, BoardElement element) {
 		panel.putBoardElement(x, element);
 	}
 
 
 	@Override
-	public void changeSnakeColor(Point p, String colorHex) {
+	public void changeCellColor(Point p, String colorHex) {
 		panel.changeSnakeColor(p,Color.decode(colorHex));
 		
 	}
 
 
 	@Override
-	public void clearElement(Point p) {
+	public void clearElementInCell(Point p) {
 		panel.clearElement(p);
 		
 	}

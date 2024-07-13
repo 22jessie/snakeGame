@@ -1,6 +1,4 @@
-package model;
-
-import controller.SnakeController;
+package controller;
 
 public class Main {
 	

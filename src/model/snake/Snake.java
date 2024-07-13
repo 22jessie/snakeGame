@@ -49,7 +49,7 @@ public class Snake extends Thread {
 		slitherable.showSnakeTail(tail.getPosition());
 		previousTailPosition=tail.getPreviousPosition();
 		if(previousTailPosition!=null) {
-			slitherable.clearPoint(previousTailPosition);
+			slitherable.clearCell(previousTailPosition);
 		}
 	}
 	
@@ -115,11 +115,11 @@ public class Snake extends Thread {
 		String color=SnakeColorGenerator.generateRandomColorAsHex();
 		
 		slitherable.setSnakeColor(color);
-		slitherable.changeSnakeColor(head.getPosition(),color);
+		slitherable.changeCellColor(head.getPosition(),color);
 		for(SnakeFragment f : body) {
-			slitherable.changeSnakeColor(f.getPosition(),color);
+			slitherable.changeCellColor(f.getPosition(),color);
 		}
-		slitherable.changeSnakeColor(tail.getPosition(),color);
+		slitherable.changeCellColor(tail.getPosition(),color);
 	}
 
 	public void kill() {
@@ -127,7 +127,7 @@ public class Snake extends Thread {
 	}
 	
 	public void cleanCell(Point p) {
-		slitherable.clearPoint(p);
+		slitherable.clearCell(p);
 	}
 
 	public void doubleSpeed() {

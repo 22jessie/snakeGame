@@ -17,8 +17,8 @@ public class SnakeController implements Constants{
 	public SnakeController() {
 		
 		snakeWindow=new SnakeWindow(this);
-		snake=new Snake(new Point(BOARD_ROWS/2,BOARD_COL/2), snakeWindow);
-		slitheryArea=new SlitheryArea(BOARD_ROWS, BOARD_COL,snake);
+		snake=new Snake(new Point(BOARD_ROWS/2,BOARD_COLS/2), snakeWindow);
+		slitheryArea=new SlitheryArea(snake);
 		snake.setSlitheryArea(slitheryArea);
 		slitheryArea.setSnake(snake);
 		slitheryArea.setSlitherable(snakeWindow);

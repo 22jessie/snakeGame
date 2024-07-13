@@ -9,13 +9,13 @@ public interface Slitherable {
 
 	void showSnakeTail(Point tail);
 
-	void changeSnakeColor(Point p, String colorAsHex);
+	void changeCellColor(Point p, String colorAsHex);
 
-	void clearPoint(Point prevTail);
+	void clearCell(Point prevTail);
 
-	void putBoardElement(Point x, BoardElement element);
+	void putElementInCell(Point x, BoardElement element);
 
-	void clearElement(Point p);
+	void clearElementInCell(Point p);
 	
 	void setSnakeColor(String colorHex);
 }
