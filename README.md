@@ -18,14 +18,14 @@ There are elements that make the cause a different effect on the snake.
 
 <p align="center">
   
-  ### The fire makes the snake double its speed.
+  ### The fire makes the snake doubles its speed.
   
   <img src="/resources/fire.png" width="30" height="30">
 <p> 
 
 <p align="center">
   
-  ### The apple makes the snake grow.
+  ### The apple makes the snake grows.
   
   <img src="/resources/apple.png" width="30" height="30">
 <p> 
@@ -54,9 +54,9 @@ There are elements that make the cause a different effect on the snake.
   
   ##Here are some images of the game in execution
   
-  <img src="/resources/1.png" width="500" height="300">
-  <img src="/resources/2.png" width="500" height="300">
-  <img src="/resources/3.png" width="500" height="300">
-  <img src="/resources/4.png" width="500" height="300">
+  <img src="/images/1.png" width="500" height="300">
+  <img src="/images/2.png" width="500" height="300">
+  <img src="/images/3.png" width="500" height="300">
+  <img src="/images/4.png" width="500" height="300">
 <p> 
 
