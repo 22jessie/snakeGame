@@ -20,8 +20,8 @@ public class SnakeWindow extends JFrame implements Constants,Slitherable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public static int WINDOW_WIDTH_PX=300;
-	public static int WINDOW_HEIGHT_PX=300;
+	public static int WINDOW_WIDTH_PX=BOARD_COLS*30;
+	public static int WINDOW_HEIGHT_PX=BOARD_ROWS*30;
 
 	
 	

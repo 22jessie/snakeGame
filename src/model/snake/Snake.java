@@ -25,7 +25,7 @@ public class Snake extends Thread {
 		tail=head=new SnakeFragment(startingPosition);
 		body.add(head);
 		alive=true;
-		velocityMilliSeconds=1400;
+		velocityMilliSeconds=900;
 		this.slitherable=slitherable;
 	}
 	

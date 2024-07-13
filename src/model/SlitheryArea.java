@@ -13,8 +13,6 @@ import model.board_elements.BoardElementFactory;
 
 public class SlitheryArea implements Constants{
 	
-	private final static int MAX_ELEMENTS_IN_BOARD=4;
-	
 	private Map<Point,BoardElement> cellsWithElements;
 	private Snake snake;
 	private Slitherable slitherable;
